@@ -5,740 +5,512 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mente em Silêncio — Um sistema para reorganizar o que está dentro</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
-
 <style>
-:root{
---obsidian:#080809;
---graphite:#111113;
---mist:#1A1A1E;
---border:#252528;
---offwhite:#F0EBE1;
---beige:#CFC7B4;
---muted:#7A7A86;
---cold:#46464F;
---petroleum:#162E3C;
---petro-mid:#1E3F52;
---gold:#9A8050;
---gold-light:#BAA070;
---gold-pale:#D4BC96;
-}
+  :root {
+    --obsidian: #080809;
+    --graphite: #111113;
+    --mist: #1A1A1E;
+    --border: #252528;
+    --offwhite: #F0EBE1;
+    --beige: #CFC7B4;
+    --muted: #7A7A86;
+    --cold: #46464F;
+    --petroleum: #162E3C;
+    --petro-mid: #1E3F52;
+    --gold: #9A8050;
+    --gold-light: #BAA070;
+    --gold-pale: #D4BC96;
+  }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html{
-scroll-behavior:smooth;
-}
+  html { scroll-behavior: smooth; }
 
-body{
-background:var(--obsidian);
-color:var(--offwhite);
-font-family:'DM Sans',sans-serif;
-font-weight:300;
-overflow-x:hidden;
-}
+  body {
+    background: var(--obsidian);
+    color: var(--offwhite);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
 
-body::after{
-content:'';
-position:fixed;
-inset:0;
-background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-pointer-events:none;
-z-index:100;
-}
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
 
-.container{
-max-width:720px;
-margin:0 auto;
-padding:0 32px;
-}
+  .display {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
 
-.container-wide{
-max-width:1000px;
-margin:0 auto;
-padding:0 32px;
-}
+  .mono {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+  }
 
-nav{
-position:fixed;
-top:0;
-left:0;
-right:0;
-z-index:50;
-padding:20px 40px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-background:linear-gradient(to bottom, rgba(8,8,9,0.95) 0%, transparent 100%);
-backdrop-filter:blur(1px);
-}
+  .italic {
+    font-family: 'Lora', serif;
+    font-style: italic;
+  }
 
-.nav-logo{
-font-family:'Playfair Display',serif;
-font-size:15px;
-color:var(--offwhite);
-letter-spacing:0.02em;
-opacity:0.7;
-}
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
 
-.nav-cta{
-font-family:'DM Mono',monospace;
-font-size:10px;
-color:var(--gold-light);
-letter-spacing:0.15em;
-text-transform:uppercase;
-text-decoration:none;
-padding:8px 16px;
-border:1px solid rgba(160,130,80,0.3);
-border-radius:2px;
-transition:all .2s;
-}
+  .container-wide {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
 
-.nav-cta:hover{
-border-color:var(--gold);
-color:var(--gold-pale);
-background:rgba(160,130,80,0.05);
-}
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(8,8,9,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(1px);
+  }
 
-.hero{
-min-height:100vh;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:120px 32px 80px;
-position:relative;
-overflow:hidden;
-}
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    color: var(--offwhite);
+    letter-spacing: 0.02em;
+    opacity: 0.7;
+  }
 
-.hero::before{
-content:'';
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-55%);
-width:600px;
-height:600px;
-background:radial-gradient(ellipse, rgba(22,46,60,0.4) 0%, transparent 70%);
-pointer-events:none;
-}
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid rgba(160, 130, 80, 0.3);
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
 
-.hero-eyebrow{
-font-family:'DM Mono',monospace;
-font-size:10px;
-color:var(--gold);
-letter-spacing:0.3em;
-text-transform:uppercase;
-margin-bottom:32px;
-}
+  .nav-cta:hover {
+    border-color: var(--gold);
+    color: var(--gold-pale);
+    background: rgba(160, 130, 80, 0.05);
+  }
 
-.hero-title{
-font-family:'Playfair Display',serif;
-font-size:clamp(48px,8vw,86px);
-font-weight:400;
-line-height:1.08;
-letter-spacing:-0.03em;
-color:var(--offwhite);
-margin-bottom:28px;
-max-width:680px;
-}
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 32px 80px;
+    position: relative;
+    overflow: hidden;
+  }
 
-.hero-title em{
-font-style:italic;
-color:var(--beige);
-}
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -55%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse, rgba(22, 46, 60, 0.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
 
-.hero-subtitle{
-font-size:17px;
-color:var(--muted);
-line-height:1.8;
-max-width:480px;
-margin-bottom:56px;
-font-weight:300;
-}
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
 
-.hero-cta-group{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:16px;
-}
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 8vw, 86px);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    color: var(--offwhite);
+    margin-bottom: 28px;
+    max-width: 680px;
+  }
 
-.btn-primary{
-padding:16px 36px;
-background:rgba(154,128,80,0.12);
-border:1px solid rgba(154,128,80,0.4);
-color:var(--gold-pale);
-font-family:'DM Sans',sans-serif;
-font-size:14px;
-font-weight:400;
-letter-spacing:0.05em;
-border-radius:2px;
-cursor:pointer;
-transition:all .25s;
-text-decoration:none;
-display:inline-block;
-}
+  .hero-title em {
+    font-style: italic;
+    color: var(--beige);
+  }
 
-.btn-primary:hover{
-background:rgba(154,128,80,0.2);
-border-color:var(--gold-light);
-color:var(--offwhite);
-transform:translateY(-1px);
-}
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
 
-.hero-price-hint{
-font-family:'DM Mono',monospace;
-font-size:10px;
-color:var(--cold);
-letter-spacing:0.12em;
-}
+  .hero-cta-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
 
-.section-divider{
-height:1px;
-background:linear-gradient(to right, transparent, var(--border), transparent);
-max-width:400px;
-margin:0 auto;
-}
+  .btn-primary {
+    padding: 16px 36px;
+    background: rgba(154, 128, 80, 0.12);
+    border: 1px solid rgba(154, 128, 80, 0.4);
+    color: var(--gold-pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-decoration: none;
+    display: inline-block;
+  }
 
-section{
-padding:100px 0;
-position:relative;
-}
+  .btn-primary:hover {
+    background: rgba(154, 128, 80, 0.2);
+    border-color: var(--gold-light);
+    color: var(--offwhite);
+    transform: translateY(-1px);
+  }
 
-.problem-text{
-font-family:'Playfair Display',serif;
-font-size:clamp(24px,4vw,34px);
-font-weight:400;
-line-height:1.55;
-color:var(--beige);
-text-align:center;
-max-width:620px;
-margin:0 auto 56px;
-letter-spacing:-0.01em;
-}
+  .hero-price-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cold);
+    letter-spacing: 0.12em;
+  }
 
-.problem-text strong{
-color:var(--offwhite);
-}
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    max-width: 400px;
+    margin: 0 auto;
+  }
 
-.problem-list{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:2px;
-max-width:640px;
-margin:0 auto;
-}
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
 
-.problem-item{
-padding:18px 24px;
-background:var(--graphite);
-border:1px solid var(--border);
-font-size:13px;
-color:var(--muted);
-line-height:1.5;
-position:relative;
-padding-left:36px;
-}
+  .problem-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--beige);
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 56px;
+    letter-spacing: -0.01em;
+  }
 
-.problem-item::before{
-content:'—';
-position:absolute;
-left:16px;
-color:var(--cold);
-font-family:'DM Mono',monospace;
-font-size:10px;
-}
+  .problem-text strong {
+    color: var(--offwhite);
+  }
 
-.bridge{
-text-align:center;
-padding:100px 0;
-}
+  .problem-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
 
-.bridge-text{
-font-family:'Playfair Display',serif;
-font-size:clamp(28px,5vw,44px);
-font-weight:400;
-line-height:1.4;
-color:var(--offwhite);
-max-width:600px;
-margin:0 auto 32px;
-}
+  .problem-item {
+    padding: 18px 24px;
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+    position: relative;
+    padding-left: 36px;
+  }
 
-.bridge-body{
-font-size:16px;
-color:var(--muted);
-line-height:1.9;
-max-width:500px;
-margin:0 auto;
-}
+  .problem-item::before {
+    content: '—';
+    position: absolute;
+    left: 16px;
+    color: var(--cold);
+  }
 
-.section-label{
-font-family:'DM Mono',monospace;
-font-size:9px;
-color:var(--gold);
-letter-spacing:0.3em;
-text-transform:uppercase;
-text-align:center;
-margin-bottom:48px;
-}
+  .mockup-section {
+    padding: 80px 0;
+  }
 
-.inside-grid{
-display:grid;
-gap:2px;
-max-width:720px;
-margin:0 auto;
-}
+  .mockup-frame {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
 
-.inside-item{
-display:grid;
-grid-template-columns:40px 1fr auto;
-gap:20px;
-padding:24px 28px;
-background:var(--graphite);
-border:1px solid var(--border);
-}
+  .testimonial-section {
+    text-align: center;
+    padding: 80px 0;
+  }
 
-.inside-icon{
-font-family:'DM Mono',monospace;
-font-size:16px;
-color:var(--gold);
-}
+  .testimonial-text {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--beige);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
 
-.inside-title{
-font-size:15px;
-color:var(--offwhite);
-margin-bottom:6px;
-}
+  .testimonial-author {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
 
-.inside-desc{
-font-size:12px;
-color:var(--muted);
-line-height:1.6;
-}
+  .pricing-section {
+    padding: 100px 0;
+    text-align: center;
+  }
 
-.inside-tag{
-font-family:'DM Mono',monospace;
-font-size:8px;
-color:var(--petro-mid);
-letter-spacing:0.15em;
-text-transform:uppercase;
-padding:3px 8px;
-border:1px solid var(--petro-mid);
-border-radius:2px;
-white-space:nowrap;
-}
+  .pricing-card {
+    max-width: 480px;
+    margin: 0 auto;
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    padding: 48px;
+  }
 
-.pricing-section{
-padding:100px 0;
-text-align:center;
-}
+  .pricing-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--offwhite);
+  }
 
-.pricing-card{
-max-width:480px;
-margin:0 auto;
-background:var(--graphite);
-border:1px solid var(--border);
-padding:48px;
-position:relative;
-overflow:hidden;
-}
+  .pricing-amount span {
+    font-size: 20px;
+    color: var(--muted);
+  }
 
-.pricing-card::before{
-content:'';
-position:absolute;
-top:0;
-left:0;
-right:0;
-height:1px;
-background:linear-gradient(to right, transparent, var(--gold), transparent);
-}
+  .btn-buy {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: rgba(154, 128, 80, 0.1);
+    border: 1px solid rgba(154, 128, 80, 0.35);
+    color: var(--gold-pale);
+    text-decoration: none;
+    margin-top: 20px;
+  }
 
-.pricing-title{
-font-family:'Playfair Display',serif;
-font-size:28px;
-color:var(--offwhite);
-margin-bottom:8px;
-}
+  .about-section {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
 
-.pricing-sub{
-font-size:13px;
-color:var(--muted);
-margin-bottom:36px;
-line-height:1.6;
-}
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+  }
 
-.pricing-list{
-list-style:none;
-text-align:left;
-margin-bottom:40px;
-}
+  .final-cta {
+    padding: 120px 0;
+    text-align: center;
+  }
 
-.pricing-list li{
-display:flex;
-gap:12px;
-padding:10px 0;
-border-bottom:1px solid rgba(37,37,40,0.6);
-font-size:13px;
-color:var(--beige);
-line-height:1.5;
-}
-
-.pricing-list li::before{
-content:'—';
-font-family:'DM Mono',monospace;
-font-size:10px;
-color:var(--gold);
-}
-
-.pricing-label{
-font-family:'DM Mono',monospace;
-font-size:9px;
-color:var(--gold);
-letter-spacing:0.2em;
-text-transform:uppercase;
-display:block;
-margin-bottom:8px;
-}
-
-.pricing-amount{
-font-family:'Playfair Display',serif;
-font-size:52px;
-color:var(--offwhite);
-}
-
-.pricing-amount span{
-font-size:20px;
-color:var(--muted);
-vertical-align:top;
-margin-top:10px;
-display:inline-block;
-}
-
-.pricing-note{
-font-family:'DM Mono',monospace;
-font-size:9px;
-color:var(--cold);
-letter-spacing:0.1em;
-margin-bottom:28px;
-display:block;
-}
-
-.btn-buy{
-display:block;
-width:100%;
-padding:16px;
-background:rgba(154,128,80,0.1);
-border:1px solid rgba(154,128,80,0.35);
-color:var(--gold-pale);
-font-size:14px;
-letter-spacing:0.05em;
-border-radius:2px;
-text-decoration:none;
-transition:all .25s;
-}
-
-.btn-buy:hover{
-background:rgba(154,128,80,0.18);
-border-color:var(--gold-light);
-color:var(--offwhite);
-}
-
-.final-cta{
-padding:120px 0;
-text-align:center;
-}
-
-.final-title{
-font-family:'Playfair Display',serif;
-font-size:clamp(32px,6vw,54px);
-font-weight:400;
-color:var(--offwhite);
-line-height:1.25;
-max-width:560px;
-margin:0 auto 24px;
-}
-
-.final-sub{
-font-size:15px;
-color:var(--muted);
-margin-bottom:40px;
-}
-
-footer{
-padding:40px;
-border-top:1px solid var(--border);
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-.footer-brand{
-font-family:'Playfair Display',serif;
-font-size:14px;
-color:var(--cold);
-}
-
-.footer-note{
-font-family:'DM Mono',monospace;
-font-size:9px;
-color:var(--cold);
-letter-spacing:0.15em;
-}
-
-@media(max-width:640px){
-.problem-list{
-grid-template-columns:1fr;
-}
-
-nav{
-padding:16px 20px;
-}
-
-.pricing-card{
-padding:32px 24px;
-}
-
-footer{
-flex-direction:column;
-gap:12px;
-text-align:center;
-}
-}
+  footer {
+    padding: 40px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+  }
 </style>
 </head>
 
 <body>
 
 <nav>
-<div class="nav-logo">Mente em Silêncio</div>
+  <div class="nav-logo">Mente em Silêncio</div>
 
-<a href="https://pay.kiwify.com.br/q36QS6l" class="nav-cta">
-Quero acessar →
-</a>
+  <!-- ALTERADO -->
+  <a href="https://pay.kiwify.com.br/q36QS6l" class="nav-cta">
+    Quero acessar →
+  </a>
 </nav>
 
 <section class="hero">
-<div class="hero-eyebrow">
-Sistema Mental Premium
-</div>
+  <div class="hero-eyebrow">Sistema Mental Premium</div>
 
-<h1 class="hero-title">
-Mente em <em>Silêncio</em>
-</h1>
+  <h1 class="hero-title">
+    Mente em <em>Silêncio</em>
+  </h1>
 
-<p class="hero-subtitle">
-Um sistema para reorganizar o que está dentro — em um mundo que nunca para.
-</p>
+  <p class="hero-subtitle">
+    Um sistema para reorganizar o que está dentro — em um mundo que nunca para.
+  </p>
 
-<div class="hero-cta-group">
+  <div class="hero-cta-group">
 
-<a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
-Quero acessar o sistema →
-</a>
+    <!-- ALTERADO -->
+    <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
+      Quero acessar o sistema →
+    </a>
 
-<span class="hero-price-hint">
-Acesso completo · Notion Template
-</span>
+    <span class="hero-price-hint">
+      Acesso completo · Notion Template
+    </span>
 
-</div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
 
-<section>
-<div class="container">
+<section class="mockup-section">
+  <div class="container-wide">
 
-<p class="problem-text">
-Você acorda já pensando em <strong>dez coisas.</strong><br>
-Vai dormir ainda <strong>processando o dia.</strong><br>
-No meio, tenta focar — mas <em>algo sempre puxa.</em>
-</p>
+    <div class="mockup-frame">
+      <img src="https://via.placeholder.com/1200x700/111113/F0EBE1?text=Mockup+Notion+Mente+em+Silêncio"
+      style="width:100%;display:block;">
+    </div>
 
-<p style="text-align:center;font-size:14px;color:var(--cold);margin-bottom:40px;font-style:italic">
-Não é falta de disciplina. É a arquitetura do mundo moderno trabalhando contra a sua mente.
-</p>
-
-<div class="problem-list">
-<div class="problem-item">Sobrecarga mental constante</div>
-<div class="problem-item">Ansiedade sem causa aparente</div>
-<div class="problem-item">Dificuldade real de focar</div>
-<div class="problem-item">Hiperestimulação digital</div>
-<div class="problem-item">Exaustão emocional acumulada</div>
-<div class="problem-item">Sensação de perda de controle</div>
-<div class="problem-item">Pensamentos que não saem</div>
-<div class="problem-item">Sono que não descansa</div>
-</div>
-
-</div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
 
-<section class="bridge">
-<div class="container">
+<section class="testimonial-section">
+  <div class="container">
 
-<h2 class="bridge-text">
-Mente em Silêncio não é um curso.<br>
-Não tem aula. Não tem tarefa.<br>
-É um sistema. Um espaço. Um ritual.
-</h2>
+    <p class="testimonial-text">
+      "Finalmente consegui ouvir meu próprio pensamento.
+      Não sabia que isso era possível sem silenciar o mundo."
+    </p>
 
-<p class="bridge-body">
-Para você e sua mente voltarem a se entender.<br><br>
-Não é sobre produtividade. É sobre sobreviver mentalmente ao mundo moderno — com elegância, profundidade e clareza.
-</p>
+    <p class="testimonial-author">
+      — Rebeca Batista
+    </p>
 
-</div>
-</section>
-
-<div class="section-divider"></div>
-
-<section>
-<div class="container-wide">
-
-<div class="section-label">
-O que está dentro
-</div>
-
-<div class="inside-grid">
-
-<div class="inside-item">
-<div class="inside-icon">◎</div>
-
-<div>
-<div class="inside-title">Dashboard de Estado Mental</div>
-
-<div class="inside-desc">
-Para começar cada dia com intenção, não com caos.
-</div>
-</div>
-
-<div class="inside-tag">diário</div>
-</div>
-
-<div class="inside-item">
-<div class="inside-icon">↓</div>
-
-<div>
-<div class="inside-title">Brain Dump Ilimitado</div>
-
-<div class="inside-desc">
-Um espaço para sua mente finalmente descansar.
-</div>
-</div>
-
-<div class="inside-tag">clareza</div>
-</div>
-
-<div class="inside-item">
-<div class="inside-icon">⬜</div>
-
-<div>
-<div class="inside-title">Protocolo de Foco Profundo</div>
-
-<div class="inside-desc">
-Uma sessão. Uma coisa. Sem distração.
-</div>
-</div>
-
-<div class="inside-tag">foco</div>
-</div>
-
-</div>
-</div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
 
 <section class="pricing-section" id="pricing">
 
-<div class="container">
+  <div class="container">
 
-<div class="section-label">
-Acesso completo
-</div>
+    <div class="pricing-card">
 
-<div class="pricing-card">
+      <h2>Mente em Silêncio</h2>
 
-<div class="pricing-title">
-Mente em Silêncio
-</div>
+      <p style="margin:20px 0;color:var(--muted)">
+        O sistema completo para reorganizar sua mente.
+      </p>
 
-<p class="pricing-sub">
-O sistema completo para reorganizar sua mente em um mundo que nunca para.
-</p>
+      <!-- ALTERADO -->
+      <div class="pricing-amount">
+        <span>R$</span> 37
+      </div>
 
-<ul class="pricing-list">
-<li>Dashboard de Estado Mental</li>
-<li>Brain Dump ilimitado com arquivo</li>
-<li>Sistema de Clareza Mental</li>
-<li>Protocolo de Foco Profundo</li>
-<li>Detox Mental guiado</li>
-<li>Journal Emocional</li>
-<li>6 Protocolos de Emergência Mental</li>
-<li>Acesso vitalício</li>
-</ul>
+      <!-- ALTERADO -->
+      <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-buy">
+        Quero acessar o Mente em Silêncio →
+      </a>
 
-<div class="pricing-price">
+    </div>
 
-<span class="pricing-label">
-Preço de lançamento
-</span>
-
-<div class="pricing-amount">
-<span>R$</span> 37
-</div>
-
-</div>
-
-<span class="pricing-note">
-Pagamento único · Acesso imediato ao Notion
-</span>
-
-<a href="https://pay.kiwify.com.br/q36QS6l" class="btn-buy">
-Quero acessar o Mente em Silêncio →
-</a>
-
-</div>
-</div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
 
+<section class="about-section">
+
+  <div class="container">
+
+    <div class="about-grid">
+
+      <div>
+        <h3>Lorrane Santos</h3>
+        <p style="color:var(--cold)">
+          Canal · Psicologia Humana
+        </p>
+      </div>
+
+      <div>
+        <p style="line-height:1.9;color:var(--beige)">
+          Criei este sistema porque precisava dele.
+          Como alguém que pensa demais e vive num mundo projetado para distrair,
+          precisava de um espaço que entendesse isso.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 <section class="final-cta">
 
-<div class="container">
+  <div class="container">
 
-<h2 class="final-title">
-Sua mente está esperando<br>
-por um lugar assim.
-</h2>
+    <h2 style="font-size:48px;margin-bottom:24px">
+      Sua mente está esperando por um lugar assim.
+    </h2>
 
-<p class="final-sub">
-Se você chegou até aqui, já sabe o que precisa.
-</p>
+    <p style="margin-bottom:40px;color:var(--muted)">
+      Se você chegou até aqui, já sabe o que precisa.
+    </p>
 
-<a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
-Quero acessar o sistema →
-</a>
+    <!-- ALTERADO -->
+    <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
+      Quero acessar o sistema →
+    </a>
 
-</div>
+  </div>
+
 </section>
 
 <footer>
 
-<div class="footer-brand">
-Mente em Silêncio
-</div>
+  <div class="footer-brand">
+    Mente em Silêncio
+  </div>
 
-<div class="footer-note">
-🌑 Um sistema para reorganizar o que está dentro.
-</div>
+  <div class="footer-note">
+    🌑 Um sistema para reorganizar o que está dentro.
+  </div>
 
 </footer>
 
