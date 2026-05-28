@@ -34,6 +34,7 @@
     overflow-x: hidden;
   }
 
+  /* NOISE */
   body::after {
     content: '';
     position: fixed;
@@ -43,6 +44,7 @@
     z-index: 100;
   }
 
+  /* TYPOGRAPHY */
   .display {
     font-family: 'Playfair Display', serif;
     font-weight: 400;
@@ -61,6 +63,7 @@
     font-style: italic;
   }
 
+  /* LAYOUT */
   .container {
     max-width: 720px;
     margin: 0 auto;
@@ -73,6 +76,7 @@
     padding: 0 32px;
   }
 
+  /* NAV */
   nav {
     position: fixed;
     top: 0;
@@ -114,6 +118,7 @@
     background: rgba(160, 130, 80, 0.05);
   }
 
+  /* HERO */
   .hero {
     min-height: 100vh;
     display: flex;
@@ -145,6 +150,8 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
   }
 
   .hero-title {
@@ -156,6 +163,8 @@
     color: var(--offwhite);
     margin-bottom: 28px;
     max-width: 680px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
   }
 
   .hero-title em {
@@ -170,6 +179,8 @@
     max-width: 480px;
     margin-bottom: 56px;
     font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
   }
 
   .hero-cta-group {
@@ -177,6 +188,8 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
   }
 
   .btn-primary {
@@ -209,6 +222,45 @@
     letter-spacing: 0.12em;
   }
 
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .hero-scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--cold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  .hero-scroll-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--cold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 0;
+    position: relative;
+  }
+
   .section-divider {
     height: 1px;
     background: linear-gradient(to right, transparent, var(--border), transparent);
@@ -216,11 +268,17 @@
     margin: 0 auto;
   }
 
-  section {
-    padding: 100px 0;
-    position: relative;
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 48px;
   }
 
+  /* PROBLEM SECTION */
   .problem-text {
     font-family: 'Playfair Display', serif;
     font-size: clamp(24px, 4vw, 34px);
@@ -235,6 +293,7 @@
 
   .problem-text strong {
     color: var(--offwhite);
+    font-weight: 500;
   }
 
   .problem-list {
@@ -251,6 +310,8 @@
     border: 1px solid var(--border);
     font-size: 13px;
     color: var(--muted);
+    font-weight: 300;
+    line-height: 1.5;
     position: relative;
     padding-left: 36px;
   }
@@ -260,24 +321,179 @@
     position: absolute;
     left: 16px;
     color: var(--cold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
   }
 
-  .mockup-section {
-    padding: 80px 0;
+  /* BRIDGE SECTION */
+  .bridge {
+    text-align: center;
+    padding: 100px 0;
   }
 
-  .mockup-frame {
-    max-width: 900px;
+  .bridge-pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .bridge-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--offwhite);
+    max-width: 600px;
+    margin: 0 auto 32px;
+    letter-spacing: -0.01em;
+  }
+
+  .bridge-text em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .bridge-body {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.9;
+    max-width: 500px;
     margin: 0 auto;
+    font-weight: 300;
+  }
+
+  /* WHAT'S INSIDE */
+  .inside-grid {
+    display: grid;
+    gap: 2px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .inside-item {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: start;
+    gap: 20px;
+    padding: 24px 28px;
     background: var(--graphite);
     border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
+    transition: all 0.2s;
   }
 
+  .inside-item:hover {
+    background: var(--mist);
+    border-color: rgba(154, 128, 80, 0.2);
+  }
+
+  .inside-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    color: var(--gold);
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  .inside-content {}
+
+  .inside-title {
+    font-size: 15px;
+    color: var(--offwhite);
+    margin-bottom: 6px;
+    font-weight: 400;
+  }
+
+  .inside-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .inside-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--petro-mid);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--petro-mid);
+    border-radius: 2px;
+    white-space: nowrap;
+    margin-top: 4px;
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 32px;
+    bottom: 32px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--border), var(--border) 60%, transparent);
+  }
+
+  .step {
+    display: flex;
+    gap: 28px;
+    padding: 28px 0;
+  }
+
+  .step-num {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    flex-shrink: 0;
+    background: var(--obsidian);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-content {}
+
+  .step-title {
+    font-size: 16px;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* TESTIMONIAL */
   .testimonial-section {
     text-align: center;
     padding: 80px 0;
+  }
+
+  .testimonial {
+    max-width: 520px;
+    margin: 0 auto;
   }
 
   .testimonial-text {
@@ -286,6 +502,7 @@
     font-size: 20px;
     color: var(--beige);
     line-height: 1.7;
+    letter-spacing: 0.01em;
     margin-bottom: 24px;
   }
 
@@ -297,6 +514,166 @@
     text-transform: uppercase;
   }
 
+  /* MOCKUP */
+  .mockup-section {
+    padding: 80px 0;
+    overflow: hidden;
+  }
+
+  .mockup-frame {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+  }
+
+  .mockup-bar {
+    height: 36px;
+    background: var(--mist);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 8px;
+  }
+
+  .mockup-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .mockup-url {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cold);
+    letter-spacing: 0.05em;
+    margin-right: auto;
+  }
+
+  .mockup-content {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    min-height: 380px;
+  }
+
+  .mockup-sidebar {
+    background: var(--obsidian);
+    border-right: 1px solid var(--border);
+    padding: 24px 16px;
+  }
+
+  .mockup-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--offwhite);
+    margin-bottom: 4px;
+  }
+
+  .mockup-brand-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--cold);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mockup-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 2px;
+    margin-bottom: 2px;
+    font-size: 12px;
+    color: var(--cold);
+  }
+
+  .mockup-nav-item.active {
+    background: rgba(154, 128, 80, 0.08);
+    color: var(--beige);
+  }
+
+  .mockup-nav-icon {
+    font-size: 10px;
+    color: var(--gold);
+    width: 14px;
+  }
+
+  .mockup-main {
+    padding: 32px 40px;
+  }
+
+  .mockup-page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--offwhite);
+    margin-bottom: 4px;
+  }
+
+  .mockup-page-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    color: var(--cold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .mockup-quote {
+    background: var(--petroleum);
+    border-left: 2px solid var(--gold);
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--beige);
+    line-height: 1.6;
+  }
+
+  .mockup-state-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .mockup-state-pill {
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--cold);
+    border-radius: 2px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .mockup-state-pill.active {
+    border-color: rgba(154, 128, 80, 0.4);
+    color: var(--gold-light);
+    background: rgba(154, 128, 80, 0.06);
+  }
+
+  .mockup-input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mockup-input {
+    height: 36px;
+    background: var(--graphite);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+
+  /* PRICING */
   .pricing-section {
     padding: 100px 0;
     text-align: center;
@@ -308,17 +685,102 @@
     background: var(--graphite);
     border: 1px solid var(--border);
     padding: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .pricing-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .pricing-sub {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 36px;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .pricing-list {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 40px;
+  }
+
+  .pricing-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(37, 37, 40, 0.6);
+    font-size: 13px;
+    color: var(--beige);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .pricing-list li::before {
+    content: '—';
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pricing-price {
+    margin-bottom: 12px;
+  }
+
+  .pricing-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
   }
 
   .pricing-amount {
     font-family: 'Playfair Display', serif;
     font-size: 52px;
     color: var(--offwhite);
+    letter-spacing: -0.02em;
+    line-height: 1;
   }
 
   .pricing-amount span {
+    font-family: 'DM Sans', sans-serif;
     font-size: 20px;
     color: var(--muted);
+    vertical-align: top;
+    margin-top: 10px;
+    display: inline-block;
+    font-weight: 300;
+  }
+
+  .pricing-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--cold);
+    letter-spacing: 0.1em;
+    margin-bottom: 28px;
+    display: block;
   }
 
   .btn-buy {
@@ -328,10 +790,33 @@
     background: rgba(154, 128, 80, 0.1);
     border: 1px solid rgba(154, 128, 80, 0.35);
     color: var(--gold-pale);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
     text-decoration: none;
-    margin-top: 20px;
   }
 
+  .btn-buy:hover {
+    background: rgba(154, 128, 80, 0.18);
+    border-color: var(--gold-light);
+    color: var(--offwhite);
+  }
+
+  .pricing-guarantee {
+    margin-top: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--cold);
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+  }
+
+  /* ABOUT */
   .about-section {
     padding: 80px 0;
     border-top: 1px solid var(--border);
@@ -341,178 +826,459 @@
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 60px;
+    align-items: start;
+    max-width: 700px;
+    margin: 0 auto;
   }
 
+  .about-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .about-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  .about-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--cold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .about-text {
+    font-size: 15px;
+    color: var(--beige);
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .about-text p { margin-bottom: 16px; }
+
+  /* FINAL CTA */
   .final-cta {
     padding: 120px 0;
     text-align: center;
+    position: relative;
   }
 
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+  }
+
+  .final-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 6vw, 54px);
+    font-weight: 400;
+    color: var(--offwhite);
+    line-height: 1.25;
+    max-width: 560px;
+    margin: 0 auto 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .final-title em {
+    font-style: italic;
+    color: var(--gold-pale);
+  }
+
+  .final-sub {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  /* FOOTER */
   footer {
     padding: 40px;
     border-top: 1px solid var(--border);
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: var(--cold);
+  }
+
+  .footer-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--cold);
+    letter-spacing: 0.15em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .problem-list { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .mockup-content { grid-template-columns: 1fr; }
+    .mockup-sidebar { display: none; }
+    nav { padding: 16px 20px; }
+    .pricing-card { padding: 32px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--obsidian); }
+  ::-webkit-scrollbar-thumb { background: var(--border); }
 </style>
 </head>
-
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="nav-logo">Mente em Silêncio</div>
-
-  <!-- ALTERADO -->
-  <a href="https://pay.kiwify.com.br/q36QS6l" class="nav-cta">
-    Quero acessar →
-  </a>
+  <a href="#pricing" class="nav-cta">Quero acessar →</a>
 </nav>
 
+<!-- ============ HERO ============ -->
 <section class="hero">
   <div class="hero-eyebrow">Sistema Mental Premium</div>
-
-  <h1 class="hero-title">
-    Mente em <em>Silêncio</em>
-  </h1>
-
-  <p class="hero-subtitle">
-    Um sistema para reorganizar o que está dentro — em um mundo que nunca para.
-  </p>
-
+  <h1 class="hero-title">Mente em <em>Silêncio</em></h1>
+  <p class="hero-subtitle">Um sistema para reorganizar o que está dentro — em um mundo que nunca para.</p>
   <div class="hero-cta-group">
-
-    <!-- ALTERADO -->
-    <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
-      Quero acessar o sistema →
-    </a>
-
-    <span class="hero-price-hint">
-      Acesso completo · Notion Template
-    </span>
-
+    <a href="#pricing" class="btn-primary">Quero acessar o sistema →</a>
+    <span class="hero-price-hint">Acesso completo · Notion Template</span>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span class="hero-scroll-text">continuar</span>
   </div>
 </section>
 
 <div class="section-divider"></div>
 
-<section class="mockup-section">
-  <div class="container-wide">
-
-    <div class="mockup-frame">
-      <img src="https://via.placeholder.com/1200x700/111113/F0EBE1?text=Mockup+Notion+Mente+em+Silêncio"
-      style="width:100%;display:block;">
-    </div>
-
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<section class="testimonial-section">
-  <div class="container">
-
-    <p class="testimonial-text">
-      "Finalmente consegui ouvir meu próprio pensamento.
-      Não sabia que isso era possível sem silenciar o mundo."
+<!-- ============ PROBLEMA ============ -->
+<section>
+  <div class="container fade-in">
+    <p class="problem-text">
+      Você acorda já pensando em <strong>dez coisas.</strong><br>
+      Vai dormir ainda <strong>processando o dia.</strong><br>
+      No meio, tenta focar — mas <em>algo sempre puxa.</em>
     </p>
-
-    <p class="testimonial-author">
-      — Rebeca Batista
+    <p style="text-align:center; font-size:14px; color:var(--cold); margin-bottom:40px; font-weight:300; font-style:italic">
+      Não é falta de disciplina. É a arquitetura do mundo moderno trabalhando contra a sua mente.
     </p>
-
+    <div class="problem-list">
+      <div class="problem-item">Sobrecarga mental constante</div>
+      <div class="problem-item">Ansiedade sem causa aparente</div>
+      <div class="problem-item">Dificuldade real de focar</div>
+      <div class="problem-item">Hiperestimulação digital</div>
+      <div class="problem-item">Exaustão emocional acumulada</div>
+      <div class="problem-item">Sensação de perda de controle</div>
+      <div class="problem-item">Pensamentos que não saem</div>
+      <div class="problem-item">Sono que não descansa</div>
+    </div>
   </div>
 </section>
 
 <div class="section-divider"></div>
 
-<section class="pricing-section" id="pricing">
-
-  <div class="container">
-
-    <div class="pricing-card">
-
-      <h2>Mente em Silêncio</h2>
-
-      <p style="margin:20px 0;color:var(--muted)">
-        O sistema completo para reorganizar sua mente.
-      </p>
-
-      <!-- ALTERADO -->
-      <div class="pricing-amount">
-        <span>R$</span> 37
-      </div>
-
-      <!-- ALTERADO -->
-      <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-buy">
-        Quero acessar o Mente em Silêncio →
-      </a>
-
-    </div>
-
-  </div>
-</section>
-
-<div class="section-divider"></div>
-
-<section class="about-section">
-
-  <div class="container">
-
-    <div class="about-grid">
-
-      <div>
-        <h3>Lorrane Santos</h3>
-        <p style="color:var(--cold)">
-          Canal · Psicologia Humana
-        </p>
-      </div>
-
-      <div>
-        <p style="line-height:1.9;color:var(--beige)">
-          Criei este sistema porque precisava dele.
-          Como alguém que pensa demais e vive num mundo projetado para distrair,
-          precisava de um espaço que entendesse isso.
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="final-cta">
-
-  <div class="container">
-
-    <h2 style="font-size:48px;margin-bottom:24px">
-      Sua mente está esperando por um lugar assim.
+<!-- ============ VIRADA ============ -->
+<section class="bridge">
+  <div class="container fade-in">
+    <div class="bridge-pre">A virada</div>
+    <h2 class="bridge-text">
+      Mente em Silêncio não é um curso.<br>
+      Não tem aula. Não tem tarefa.<br>
+      <em>É um sistema. Um espaço. Um ritual.</em>
     </h2>
-
-    <p style="margin-bottom:40px;color:var(--muted)">
-      Se você chegou até aqui, já sabe o que precisa.
+    <p class="bridge-body">
+      Para você e sua mente voltarem a se entender.<br><br>
+      Não é sobre produtividade. É sobre sobreviver mentalmente ao mundo moderno — com elegância, profundidade e clareza.
     </p>
-
-    <!-- ALTERADO -->
-    <a href="https://pay.kiwify.com.br/q36QS6l" class="btn-primary">
-      Quero acessar o sistema →
-    </a>
-
   </div>
-
 </section>
 
+<div class="section-divider"></div>
+
+<!-- ============ O QUE ESTÁ DENTRO ============ -->
+<section>
+  <div class="container-wide fade-in">
+    <div class="section-label">O que está dentro</div>
+    <div class="inside-grid">
+      <div class="inside-item">
+        <div class="inside-icon">◎</div>
+        <div class="inside-content">
+          <div class="inside-title">Dashboard de Estado Mental</div>
+          <div class="inside-desc">Para começar cada dia com intenção, não com caos. Um check-in emocional diário que toma 5 minutos e muda a qualidade do dia inteiro.</div>
+        </div>
+        <div class="inside-tag">diário</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">↓</div>
+        <div class="inside-content">
+          <div class="inside-title">Brain Dump Ilimitado</div>
+          <div class="inside-desc">Um espaço para sua mente finalmente descansar. Sem formato, sem julgamento. O que está dentro sai — e o peso diminui.</div>
+        </div>
+        <div class="inside-tag">quando precisar</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">◎</div>
+        <div class="inside-content">
+          <div class="inside-title">Sistema de Clareza Mental</div>
+          <div class="inside-desc">Quatro perguntas que reorganizam o pensamento. Para quando você perdeu o fio de si mesmo e precisa voltar ao essencial.</div>
+        </div>
+        <div class="inside-tag">reflexão</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">⬜</div>
+        <div class="inside-content">
+          <div class="inside-title">Protocolo de Foco Profundo</div>
+          <div class="inside-desc">Uma sessão. Uma coisa. Sem distração. Um ritual completo de entrada, concentração e encerramento intencional.</div>
+        </div>
+        <div class="inside-tag">foco</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">∿</div>
+        <div class="inside-content">
+          <div class="inside-title">Detox Mental Guiado</div>
+          <div class="inside-desc">Para desintoxicar a mente da hiperestimulação digital. Mapeamento de dopamina, hábitos drenantes e protocolo de recuperação.</div>
+        </div>
+        <div class="inside-tag">recuperação</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">〰</div>
+        <div class="inside-content">
+          <div class="inside-title">Journal Emocional — 12 perguntas</div>
+          <div class="inside-desc">Introspecção real. Perguntas que chegam onde a conversa comum não chega. Para se entender de verdade.</div>
+        </div>
+        <div class="inside-tag">introspecção</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">△</div>
+        <div class="inside-content">
+          <div class="inside-title">6 Protocolos de Emergência Mental</div>
+          <div class="inside-desc">Para os dias em que tudo parece demais. Reset de 10 min, anti-ansiedade, anti-caos, recuperação emocional, ritual noturno e foco profundo.</div>
+        </div>
+        <div class="inside-tag">emergência</div>
+      </div>
+      <div class="inside-item">
+        <div class="inside-icon">⬡</div>
+        <div class="inside-content">
+          <div class="inside-title">Arquivo Mental</div>
+          <div class="inside-desc">Tudo que você já processou — guardado com cuidado. Para ver de onde você veio e os padrões que revelam o caminho.</div>
+        </div>
+        <div class="inside-tag">memória</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section>
+  <div class="container fade-in">
+    <div class="section-label">Como funciona</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <div class="step-title">Você acessa o sistema no Notion</div>
+          <div class="step-desc">Um template completo, elegante e imediato. Sem instalação, sem configuração complexa. Abre e já está lá — esperando.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <div class="step-title">Usa o que você precisa, quando precisa</div>
+          <div class="step-desc">Não é um curso linear. Não há ordem obrigatória. Você vai para onde sua mente está pedindo — Dashboard quando começa o dia, Brain Dump quando pesa, Protocolos quando aperta.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <div class="step-title">O sistema acumula o que você processa</div>
+          <div class="step-desc">Com o tempo, o Arquivo Mental revela padrões. Você começa a se entender com mais clareza — não porque alguém te ensinou, mas porque você se ouviu.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ MOCKUP ============ -->
+<section class="mockup-section fade-in">
+  <div class="container-wide">
+    <div class="section-label" style="margin-bottom:32px">O sistema</div>
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-url">notion.so / mente-em-silencio</div>
+      </div>
+      <div class="mockup-content">
+        <div class="mockup-sidebar">
+          <div class="mockup-brand">Mente em Silêncio</div>
+          <div class="mockup-brand-sub">sistema mental</div>
+          <div class="mockup-nav-item active"><span class="mockup-nav-icon">◎</span> Dashboard</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">↓</span> Brain Dump</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">◎</span> Clareza Mental</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">⬜</span> Foco Profundo</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">∿</span> Detox Mental</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">〰</span> Journal</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">△</span> Protocolos</div>
+          <div class="mockup-nav-item"><span class="mockup-nav-icon">⬡</span> Arquivo</div>
+        </div>
+        <div class="mockup-main">
+          <div class="mockup-page-title">Estado Mental Hoje</div>
+          <div class="mockup-page-sub">Dashboard · Check-in diário</div>
+          <div class="mockup-quote">"A clareza não vem de pensar mais. Vem de remover o que não precisa estar lá."</div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--cold);letter-spacing:.2em;margin-bottom:10px;text-transform:uppercase">Como você está chegando hoje?</div>
+          <div class="mockup-state-row">
+            <div class="mockup-state-pill">🌑 Caótico</div>
+            <div class="mockup-state-pill">🌘 Pesado</div>
+            <div class="mockup-state-pill active">🌗 Neutro</div>
+            <div class="mockup-state-pill">🌔 Leve</div>
+            <div class="mockup-state-pill">🌕 Claro</div>
+          </div>
+          <div style="font-family:'DM Mono',monospace;font-size:8px;color:var(--cold);letter-spacing:.2em;margin:16px 0 8px;text-transform:uppercase">Prioridade única do dia</div>
+          <div class="mockup-input-row">
+            <div class="mockup-input"></div>
+            <div class="mockup-input"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ TESTEMUNHO ============ -->
+<section class="testimonial-section fade-in">
+  <div class="container">
+    <div class="testimonial">
+      <p class="testimonial-text">"Finalmente consegui ouvir meu próprio pensamento. Não sabia que isso era possível sem silenciar o mundo — só organizando como eu me relaciono com ele."</p>
+      <p class="testimonial-author">—Rebeca Batista</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing-section" id="pricing">
+  <div class="container fade-in">
+    <div class="section-label">Acesso completo</div>
+    <div class="pricing-card">
+      <div class="pricing-title">Mente em Silêncio</div>
+      <p class="pricing-sub">O sistema completo para reorganizar sua mente em um mundo que nunca para.</p>
+
+      <ul class="pricing-list">
+        <li>Dashboard de Estado Mental</li>
+        <li>Brain Dump ilimitado com arquivo</li>
+        <li>Sistema de Clareza Mental (4 perguntas)</li>
+        <li>Protocolo de Foco Profundo com timer</li>
+        <li>Detox Mental guiado</li>
+        <li>Journal Emocional — 12 perguntas de introspecção</li>
+        <li>6 Protocolos de Emergência Mental</li>
+        <li>Arquivo Mental completo</li>
+        <li>Acesso vitalício + atualizações futuras</li>
+      </ul>
+
+      <div class="pricing-price">
+        <span class="pricing-label">Preço de lançamento</span>
+        <div class="pricing-amount"><span>R$</span> 97</div>
+      </div>
+      <span class="pricing-note">Pagamento único · Acesso imediato ao Notion</span>
+      <a href="#" class="btn-buy">Quero acessar o Mente em Silêncio →</a>
+      <p class="pricing-guarantee">Acesso via Notion — funciona em qualquer dispositivo.<br>Sem assinaturas. Sem renovações.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ============ SOBRE ============ -->
+<section class="about-section">
+  <div class="container fade-in">
+    <div class="about-grid">
+      <div>
+        <div class="about-label">Criado por</div>
+        <div class="about-name">Lorrane Santos</div>
+        <div class="about-role">Canal · Psicologia Humana</div>
+      </div>
+      <div class="about-text">
+        <p>Criei este sistema porque precisava dele. Como alguém que pensa demais, sente fundo e vive num mundo projetado para distrair — precisava de um espaço que entendesse isso.</p>
+        <p>Não é um produto de coach. Não tem energia de startup. É uma ferramenta criada por quem vive o que você vive — e sabe que a resposta não está em fazer mais, mas em clarear o que já está dentro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <div class="container fade-in">
+    <h2 class="final-title">
+      Sua mente está esperando<br>
+      por um lugar <em>assim.</em>
+    </h2>
+    <p class="final-sub">Se você chegou até aqui, já sabe o que precisa.</p>
+    <a href="#pricing" class="btn-primary">Quero acessar o sistema →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-
-  <div class="footer-brand">
-    Mente em Silêncio
-  </div>
-
-  <div class="footer-note">
-    🌑 Um sistema para reorganizar o que está dentro.
-  </div>
-
+  <div class="footer-brand">Mente em Silêncio</div>
+  <div class="footer-note">🌑 &nbsp; Um sistema para reorganizar o que está dentro.</div>
 </footer>
 
+<script>
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
+
+
